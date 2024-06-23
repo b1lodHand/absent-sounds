@@ -1,0 +1,17 @@
+{
+  "name": "com.absence.soundsystem",
+  "version": "1.0.1",
+  "displayName": "absent-sounds",
+  "description": "a simple sfx handling/pooling system for unity.",
+  "unity": "2022.3",
+  "unityRelease": "13f1",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "keywords": [],
+  "author": {
+    "name": "absencee_",
+    "email": "",
+    "url": "https://github.com/b1lodHand/"
+  }
+}
