@@ -5,11 +5,30 @@ using UnityEngine.Pool;
 
 namespace com.absence.soundsystem.internals
 {
-    internal class SoundManager : MonoBehaviour
+    /// <summary>
+    /// The singleton class responsible for handling anything based on absent-sounds.
+    /// </summary>
+    public class SoundManager : MonoBehaviour
     {
         internal const int DEFAULT_POOL_CAPACITY = 8;
         internal const int MAX_FREQ_COUNT = 16;
-        internal static readonly bool INSTANTIATE_AUTOMATICALLY = true;
+        internal static readonly bool INSTANTIATE_AUTOMATICALLY = false;
+
+        [SerializeField] private int m_maxFrequentInstances = MAX_FREQ_COUNT;
+        public int MaxFrequentInstances
+        {
+            get
+            {
+                return m_maxFrequentInstances;
+            }
+
+            set
+            {
+                if (Application.isPlaying) throw new UnityException("You cannot change a property of SoundManager runtime!");
+
+                m_maxFrequentInstances = value;
+            }
+        }
 
         #region Singleton
         private static SoundManager m_instance;
@@ -69,6 +88,8 @@ namespace com.absence.soundsystem.internals
         private void OnRelease(SoundInstance instance)
         {
             instance.m_soundData = null;
+            instance.m_followingTarget = null;
+            instance.transform.localPosition = Vector3.zero;
             instance.SetActive(false);
         }
 
@@ -81,7 +102,7 @@ namespace com.absence.soundsystem.internals
         internal SoundInstance Get(bool isTargetDataFrequent)
         {
             if (!isTargetDataFrequent) return m_pool.Get();
-            if (m_frequentList.Count < MAX_FREQ_COUNT)
+            if (m_frequentList.Count < m_maxFrequentInstances)
             {
                 SoundInstance ai1 = m_pool.Get();
                 m_frequentList.Add(ai1);

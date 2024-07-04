@@ -7,7 +7,8 @@ namespace com.absence.soundsystem.internals
     public class SoundInstance : MonoBehaviour
     {
         [SerializeField] internal SoundData m_soundData = null;
-        [SerializeField] internal AudioSource m_audioSource;
+        [SerializeField] internal AudioSource m_audioSource = null;
+        [SerializeField] internal Transform m_followingTarget = null;
 
         Coroutine m_playingCoroutine = null;
 
@@ -27,6 +28,19 @@ namespace com.absence.soundsystem.internals
         {
             m_audioSource.pitch = Random.Range(-3.0f, 3.0f);
             return this;
+        }
+        public SoundInstance WithFollowingTarget(Transform target)
+        {
+            m_followingTarget = target;
+            return this;
+        }
+
+        private void Update()
+        {
+            if (m_soundData == null) return;
+            if (m_followingTarget == null) return;
+
+            transform.position = m_followingTarget.position;
         }
 
         internal void Initialize(SoundData audioData)
