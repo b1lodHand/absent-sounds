@@ -68,7 +68,7 @@ namespace com.absence.soundsystem.internals
 
         private void OnRelease(SoundInstance instance)
         {
-            instance.m_audioData = null;
+            instance.m_soundData = null;
             instance.SetActive(false);
         }
 
@@ -98,7 +98,7 @@ namespace com.absence.soundsystem.internals
 
         internal void Release(SoundInstance instance)
         {
-            if (instance.m_audioData.IsFrequent) m_frequentList.Remove(instance);
+            if (instance.m_soundData.IsFrequent) m_frequentList.Remove(instance);
             m_pool.Release(instance);
         }
     }

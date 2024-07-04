@@ -6,21 +6,37 @@ namespace com.absence.soundsystem.internals
     [RequireComponent(typeof(AudioSource))]
     public class SoundInstance : MonoBehaviour
     {
-        [SerializeField] internal SoundData m_audioData = null;
+        [SerializeField] internal SoundData m_soundData = null;
         [SerializeField] internal AudioSource m_audioSource;
 
         Coroutine m_playingCoroutine = null;
 
         public void ForceStop() => ForceStop_Internal(true);
 
+        public SoundInstance AtPosition(Vector3 position)
+        {
+            transform.position = position;
+            return this;
+        }
+        public SoundInstance WithRandomVolume()
+        {
+            m_audioSource.volume = Random.Range(0f, 1.0f);
+            return this;
+        }
+        public SoundInstance WithRandomPitch()
+        {
+            m_audioSource.pitch = Random.Range(-3.0f, 3.0f);
+            return this;
+        }
+
         internal void Initialize(SoundData audioData)
         {
-            m_audioData = audioData;
-            m_audioSource.SetupWithData(m_audioData);
+            m_soundData = audioData;
+            m_audioSource.SetupWithData(m_soundData);
         }
         internal void Play()
         {
-            if (m_audioData.Clip == null)
+            if (m_soundData.Clip == null)
             {
                 ForceStop();
                 return;
@@ -60,7 +76,7 @@ namespace com.absence.soundsystem.internals
         internal void SetActive(bool active) => gameObject.SetActive(active);
         internal void Destroy()
         {
-            m_audioData = null;
+            m_soundData = null;
             Destroy(gameObject);
         }
     }

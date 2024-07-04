@@ -12,7 +12,7 @@ namespace com.absence.soundsystem
         [SerializeField] private bool m_loop = false;
         [SerializeField] private bool m_isFrequent = false;
         [SerializeField, MinMaxSlider(0f, 1f)] private Vector2 m_volume = new Vector2(1f, 1f);
-        [SerializeField, MinMaxSlider(0.5f, 1.5f)] private Vector2 m_pitch = new Vector2(1f, 1f);
+        [SerializeField, MinMaxSlider(-3f, 3f)] private Vector2 m_pitch = new Vector2(1f, 1f);
 
         public AudioClip Clip => m_clip;
         public AudioMixerGroup TargetMixerGroup => m_mixerGroup;
