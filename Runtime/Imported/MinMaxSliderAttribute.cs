@@ -21,10 +21,12 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System;
 using UnityEngine;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("com.absence.soundsystem.editor")]
+
 namespace com.absence.soundsystem.imported
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public sealed class MinMaxSliderAttribute : PropertyAttribute
+    internal sealed class MinMaxSliderAttribute : PropertyAttribute
     {
         public float min { get; private set; }
         public float max { get; private set; }

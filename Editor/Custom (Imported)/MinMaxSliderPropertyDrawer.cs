@@ -25,7 +25,7 @@ using UnityEngine;
 namespace com.absence.soundsystem.editor.imported
 {
     [CustomPropertyDrawer(typeof(MinMaxSliderAttribute))]
-    public class MinMaxSliderPropertyDrawer : PropertyDrawer
+    internal class MinMaxSliderPropertyDrawer : PropertyDrawer
     {
         MinMaxSliderAttribute m_minMax => attribute as MinMaxSliderAttribute;
 
