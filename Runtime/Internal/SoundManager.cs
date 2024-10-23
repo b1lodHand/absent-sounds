@@ -58,9 +58,7 @@ namespace com.absence.soundsystem.internals
         {
 #pragma warning disable CS0162 // Unreachable code detected
             if (!INSTANTIATE_AUTOMATICALLY) return;
-#pragma warning restore CS0162 // Unreachable code detected
 
-#pragma warning disable CS0162 // Unreachable code detected
             new GameObject("Audio Manager [absent-audio]").AddComponent<SoundManager>();
 #pragma warning restore CS0162 // Unreachable code detected
         }
