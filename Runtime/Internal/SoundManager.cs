@@ -12,7 +12,7 @@ namespace com.absence.soundsystem.internals
     {
         internal const int DEFAULT_POOL_CAPACITY = 8;
         internal const int MAX_FREQ_COUNT = 16;
-        internal static readonly bool INSTANTIATE_AUTOMATICALLY = false;
+        internal const bool INSTANTIATE_AUTOMATICALLY = false;
 
         [SerializeField] private int m_maxFrequentInstances = MAX_FREQ_COUNT;
         public int MaxFrequentInstances
@@ -56,9 +56,13 @@ namespace com.absence.soundsystem.internals
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void InstantiateSoundManager()
         {
+#pragma warning disable CS0162 // Unreachable code detected
             if (!INSTANTIATE_AUTOMATICALLY) return;
+#pragma warning restore CS0162 // Unreachable code detected
 
+#pragma warning disable CS0162 // Unreachable code detected
             new GameObject("Audio Manager [absent-audio]").AddComponent<SoundManager>();
+#pragma warning restore CS0162 // Unreachable code detected
         }
 
         #region Pooling
