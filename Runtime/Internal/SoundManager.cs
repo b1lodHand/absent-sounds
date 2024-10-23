@@ -8,11 +8,15 @@ namespace com.absence.soundsystem.internals
     /// <summary>
     /// The singleton class responsible for handling anything based on absent-sounds.
     /// </summary>
+    [DisallowMultipleComponent]
+    [AddComponentMenu("absencee_/absent-sounds/Sound Manager")]
     public class SoundManager : MonoBehaviour
     {
         internal const int DEFAULT_POOL_CAPACITY = 8;
         internal const int MAX_FREQ_COUNT = 16;
         internal const bool INSTANTIATE_AUTOMATICALLY = false;
+
+        [SerializeField] internal bool m_dontDestroyOnLoad = true;
 
         [SerializeField] private int m_maxFrequentInstances = MAX_FREQ_COUNT;
         public int MaxFrequentInstances
@@ -33,18 +37,6 @@ namespace com.absence.soundsystem.internals
         #region Singleton
         private static SoundManager m_instance;
         public static SoundManager Instance => m_instance;
-
-        private void SetupSingleton()
-        {
-            if (m_instance != null && m_instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            m_instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
         #endregion
 
         private void Awake()
@@ -100,6 +92,18 @@ namespace com.absence.soundsystem.internals
             instance.Destroy();
         }
         #endregion
+
+        private void SetupSingleton()
+        {
+            if (m_instance != null && m_instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            m_instance = this;
+            if (m_dontDestroyOnLoad) DontDestroyOnLoad(gameObject);
+        }
 
         internal SoundInstance Get(bool isTargetDataFrequent)
         {

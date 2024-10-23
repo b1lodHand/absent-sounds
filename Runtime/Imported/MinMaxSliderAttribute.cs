@@ -21,8 +21,6 @@ OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using System;
 using UnityEngine;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("com.absence.soundsystem.editor")]
-
 namespace com.absence.soundsystem.imported
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]

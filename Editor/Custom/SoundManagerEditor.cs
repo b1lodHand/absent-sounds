@@ -25,6 +25,16 @@ namespace com.absence.soundsystem.editor
 
             if (Application.isPlaying) GUI.enabled = false;
 
+            bool dontDestroyOnLoad = manager.m_dontDestroyOnLoad;
+
+            GUIContent ddolContent = new GUIContent()
+            {
+                text = "Don't Destroy On Load",
+                tooltip = "If true, this object will try to move itself to DontDestroyOnLoad scene on awake.",
+            };
+
+            dontDestroyOnLoad = EditorGUILayout.Toggle(ddolContent, dontDestroyOnLoad);
+
             int maxFrequents = manager.MaxFrequentInstances;
             maxFrequents = EditorGUILayout.IntField("Max Frequent Instances", maxFrequents);
 
@@ -32,6 +42,7 @@ namespace com.absence.soundsystem.editor
 
             if (EditorGUI.EndChangeCheck())
             {
+                manager.m_dontDestroyOnLoad = dontDestroyOnLoad;
                 manager.MaxFrequentInstances = maxFrequents;
                 EditorUtility.SetDirty(manager);
             }
