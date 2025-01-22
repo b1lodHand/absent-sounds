@@ -27,10 +27,12 @@ namespace com.absence.soundsystem.editor
 
             bool useSingleton = manager.m_useSingleton;
             bool dontDestroyOnLoad = manager.m_dontDestroyOnLoad;
+            int poolCapacity = manager.m_initialPoolCapacity;
             int maxFrequents = manager.MaxFrequentInstances;
             AudioSource prefab = manager.m_prefab;
 
             DrawPrefabField();
+            DrawPoolCapacityField();
             DrawFreqField();
             DrawSingletonToggle();
             DrawDDOLToggle();
@@ -54,12 +56,25 @@ namespace com.absence.soundsystem.editor
                 manager.m_dontDestroyOnLoad = dontDestroyOnLoad;
                 manager.MaxFrequentInstances = maxFrequents;
                 manager.m_prefab = prefab;
+                manager.m_initialPoolCapacity = poolCapacity;
 
                 serializedObject.ApplyModifiedProperties();
                 EditorUtility.SetDirty(manager);
             }
 
             return;
+
+            void DrawPoolCapacityField()
+            {
+                GUIContent content = new GUIContent()
+                {
+                    text = "Initial Pool Capacity",
+                    tooltip = "This is the capacity that will be used when creating the pool.",
+                };
+
+                poolCapacity = EditorGUILayout.IntField(content, poolCapacity);
+                if (poolCapacity < 0) poolCapacity = 0;
+            }
 
             void DrawSingletonToggle()
             {
@@ -98,6 +113,7 @@ namespace com.absence.soundsystem.editor
                 };
 
                 maxFrequents = EditorGUILayout.IntField(content, maxFrequents);
+                if (maxFrequents < 0) maxFrequents = 0;
             }
 
             void DrawPrefabField()

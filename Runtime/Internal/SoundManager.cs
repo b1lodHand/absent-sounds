@@ -12,12 +12,13 @@ namespace com.absence.soundsystem.internals
     [AddComponentMenu("absencee_/absent-sounds/Sound Manager")]
     public class SoundManager : MonoBehaviour
     {
-        internal const int DEFAULT_POOL_CAPACITY = 8;
+        internal const int DEFAULT_POOL_CAPACITY = 16;
         internal const int MAX_FREQ_COUNT = 16;
         internal const bool INSTANTIATE_AUTOMATICALLY = false;
 
         [SerializeField] internal bool m_useSingleton = true;
         [SerializeField] internal bool m_dontDestroyOnLoad = true;
+        [SerializeField] internal int m_initialPoolCapacity = DEFAULT_POOL_CAPACITY;
         [SerializeField] private int m_maxFrequentInstances = MAX_FREQ_COUNT;
         [SerializeField] internal AudioSource m_prefab;
 
