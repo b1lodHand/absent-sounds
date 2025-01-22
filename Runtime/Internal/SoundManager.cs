@@ -21,10 +21,7 @@ namespace com.absence.soundsystem.internals
         [SerializeField] internal int m_initialPoolCapacity = DEFAULT_POOL_CAPACITY;
         [SerializeField] private int m_maxFrequentInstances = MAX_FREQ_COUNT;
         [SerializeField] internal AudioSource m_prefab;
-
-#if UNITY_EDITOR
         [SerializeField] internal int m_activeInstances = 0;
-#endif
 
         internal IObjectPool<SoundInstance> m_pool;
         internal List<SoundInstance> m_frequentList;
