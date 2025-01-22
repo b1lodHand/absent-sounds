@@ -4,15 +4,29 @@ using UnityEngine.Audio;
 
 namespace com.absence.soundsystem
 {
+    /// <summary>
+    /// The class that holds all the data needed for a sound to get played.
+    /// </summary>
     [System.Serializable]
     public class SoundData
     {
-        [SerializeField] private AudioClip m_clip = null;
-        [SerializeField] private AudioMixerGroup m_mixerGroup = null;
-        [SerializeField] private bool m_loop = false;
-        [SerializeField] private bool m_isFrequent = false;
-        [SerializeField, MinMaxSlider(0f, 1f)] private Vector2 m_volume = new Vector2(1f, 1f);
-        [SerializeField, MinMaxSlider(-3f, 3f)] private Vector2 m_pitch = new Vector2(1f, 1f);
+        [SerializeField, Tooltip("Target clip.")] 
+        private AudioClip m_clip = null;
+
+        [SerializeField, Tooltip("Target mixer group.")] 
+        private AudioMixerGroup m_mixerGroup = null;
+
+        [SerializeField, Tooltip("If true, any sound instance created with this data will stay looped until you force-stop them.")] 
+        private bool m_loop = false;
+
+        [SerializeField, Tooltip("If true, any sound instance created with this data will marked as frequent.")] 
+        private bool m_isFrequent = false;
+
+        [SerializeField, Tooltip("The volume range which will be randomized between two values."), MinMaxSlider(0f, 1f)] 
+        private Vector2 m_volume = new Vector2(1f, 1f);
+
+        [SerializeField, Tooltip("The Pitch range which will be randomized between two values."), MinMaxSlider(-3f, 3f)] 
+        private Vector2 m_pitch = new Vector2(1f, 1f);
 
         public AudioClip Clip => m_clip;
         public AudioMixerGroup TargetMixerGroup => m_mixerGroup;

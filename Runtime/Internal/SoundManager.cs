@@ -21,6 +21,9 @@ namespace com.absence.soundsystem.internals
         [SerializeField] private int m_maxFrequentInstances = MAX_FREQ_COUNT;
         [SerializeField] internal AudioSource m_prefab;
 
+        /// <summary>
+        /// Max amount of frequent instances allowed to play at the same time. If this value gets exceeded, oldest playing frequent instance will be used instead of a new instance.
+        /// </summary>
         public int MaxFrequentInstances
         {
             get
@@ -28,7 +31,7 @@ namespace com.absence.soundsystem.internals
                 return m_maxFrequentInstances;
             }
 
-            set
+            internal set
             {
                 if (Application.isPlaying) throw new UnityException("You cannot change a property of SoundManager runtime!");
 
