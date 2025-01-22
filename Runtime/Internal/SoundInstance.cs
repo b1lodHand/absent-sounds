@@ -34,21 +34,7 @@ namespace com.absence.soundsystem.internals
             m_followingTarget = target;
             return this;
         }
-
-        private void Update()
-        {
-            if (m_soundData == null) return;
-            if (m_followingTarget == null) return;
-
-            transform.position = m_followingTarget.position;
-        }
-
-        internal void Initialize(SoundData audioData)
-        {
-            m_soundData = audioData;
-            m_audioSource.SetupWithData(m_soundData);
-        }
-        internal void Play()
+        public void Play()
         {
             if (m_soundData.Clip == null)
             {
@@ -62,13 +48,28 @@ namespace com.absence.soundsystem.internals
             m_playingCoroutine = StartCoroutine(WaitUntilEnd());
         }
 
-        internal void Initialize_Internal()
+        private void Update()
+        {
+            if (m_soundData == null) return;
+            if (m_followingTarget == null) return;
+
+            transform.position = m_followingTarget.position;
+        }
+
+        internal void Initialize(SoundData soundData)
+        {
+            m_soundData = soundData;
+            m_audioSource.SetupWithData(m_soundData);
+        }
+
+        internal void FindRealSource()
         {
             if (m_audioSource != null) return;
 
             if (gameObject.TryGetComponent(out AudioSource source)) m_audioSource = source;
             else m_audioSource = gameObject.AddComponent<AudioSource>();
         }
+
         internal void ForceStop_Internal(bool releaseToPool = true)
         {
             if (m_playingCoroutine != null)
@@ -83,7 +84,7 @@ namespace com.absence.soundsystem.internals
 
         private IEnumerator WaitUntilEnd()
         {
-            yield return new WaitWhile(() => m_audioSource.isPlaying);
+            yield return new WaitWhile(() => (m_audioSource.isPlaying || m_audioSource.loop));
             ForceStop();
         }
 

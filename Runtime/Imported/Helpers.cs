@@ -72,7 +72,7 @@ namespace com.absence.soundsystem.imported
     /// <summary>
     /// Holds some handy functions.
     /// </summary>
-    public static class Helpers
+    internal static class Helpers
     {
         public const float K_SPACING = 5f;
         public const float K_PADDING = 5f;

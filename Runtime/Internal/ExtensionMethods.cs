@@ -8,7 +8,7 @@ namespace com.absence.soundsystem.internals
         {
             source.clip = data.Clip;
             source.outputAudioMixerGroup = data.TargetMixerGroup;
-            source.loop = data.Looping;
+            source.loop = data.Loop;
             source.volume = data.Volume;
             source.pitch = data.Pitch;
         }

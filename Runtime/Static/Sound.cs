@@ -4,13 +4,33 @@ namespace com.absence.soundsystem
 {
     public static class Sound
     {
-        public static SoundInstance Play(SoundData data)
+        public static void Play(SoundData data, SoundManager manager = null)
         {
-            SoundInstance ai = SoundManager.Instance.Get(data.IsFrequent);
+            Create(data, manager).Play();
+        }
+
+        public static void Play(ISoundAsset asset, SoundManager manager = null)
+        {
+            SoundData data = asset.GetData();
+
+            Play(data, manager);
+        }
+
+        public static SoundInstance Create(SoundData data, SoundManager manager = null)
+        {
+            if (manager == null) manager = SoundManager.Instance;
+
+            SoundInstance ai = manager.Get(data.IsFrequent);
             ai.Initialize(data);
-            ai.Play();
 
             return ai;
+        }
+
+        public static SoundInstance Create(ISoundAsset asset, SoundManager manager = null)
+        {
+            SoundData data = asset.GetData();
+
+            return Create(data, manager);
         }
     }
 

@@ -16,9 +16,11 @@ namespace com.absence.soundsystem.internals
         internal const int MAX_FREQ_COUNT = 16;
         internal const bool INSTANTIATE_AUTOMATICALLY = false;
 
+        [SerializeField] internal bool m_useSingleton = true;
         [SerializeField] internal bool m_dontDestroyOnLoad = true;
-
         [SerializeField] private int m_maxFrequentInstances = MAX_FREQ_COUNT;
+        [SerializeField] internal AudioSource m_prefab;
+
         public int MaxFrequentInstances
         {
             get
@@ -41,7 +43,7 @@ namespace com.absence.soundsystem.internals
 
         private void Awake()
         {
-            SetupSingleton();
+            if (m_useSingleton) SetupSingleton();
             SetupPool();
         }
 
@@ -51,7 +53,7 @@ namespace com.absence.soundsystem.internals
 #pragma warning disable CS0162 // Unreachable code detected
             if (!INSTANTIATE_AUTOMATICALLY) return;
 
-            new GameObject("Audio Manager [absent-audio]").AddComponent<SoundManager>();
+            new GameObject("Sound Manager [absent-sounds]").AddComponent<SoundManager>();
 #pragma warning restore CS0162 // Unreachable code detected
         }
 
@@ -67,9 +69,13 @@ namespace com.absence.soundsystem.internals
 
         private SoundInstance OnCreate()
         {
-            SoundInstance ai = new GameObject("Audio Instance").AddComponent<SoundInstance>();
+            SoundInstance ai = null;
+
+            if (m_prefab == null) ai = new GameObject("Sound Instance").AddComponent<SoundInstance>();
+            else ai = GameObject.Instantiate(m_prefab).gameObject.AddComponent<SoundInstance>();
             ai.transform.SetParent(SoundManager.Instance.transform);
-            ai.Initialize_Internal();
+            ai.transform.localPosition = Vector3.zero;
+            ai.FindRealSource();
 
             return ai;
         }

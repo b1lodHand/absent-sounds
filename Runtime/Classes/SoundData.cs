@@ -16,7 +16,7 @@ namespace com.absence.soundsystem
 
         public AudioClip Clip => m_clip;
         public AudioMixerGroup TargetMixerGroup => m_mixerGroup;
-        public bool Looping => m_loop;
+        public bool Loop => m_loop;
         public bool IsFrequent => m_isFrequent;
         public float Volume => Random.Range(m_volume.x, m_volume.y);
         public float Pitch => Random.Range(m_pitch.x, m_pitch.y);
