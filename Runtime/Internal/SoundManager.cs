@@ -21,6 +21,13 @@ namespace com.absence.soundsystem.internals
         [SerializeField] private int m_maxFrequentInstances = MAX_FREQ_COUNT;
         [SerializeField] internal AudioSource m_prefab;
 
+#if UNITY_EDITOR
+        [SerializeField] internal int m_activeInstances = 0;
+#endif
+
+        internal IObjectPool<SoundInstance> m_pool;
+        internal List<SoundInstance> m_frequentList;
+
         /// <summary>
         /// Max amount of frequent instances allowed to play at the same time. If this value gets exceeded, oldest playing frequent instance will be used instead of a new instance.
         /// </summary>
@@ -61,8 +68,6 @@ namespace com.absence.soundsystem.internals
         }
 
         #region Pooling
-        private IObjectPool<SoundInstance> m_pool;
-        private List<SoundInstance> m_frequentList;
 
         private void SetupPool()
         {
@@ -86,6 +91,8 @@ namespace com.absence.soundsystem.internals
         private void OnGet(SoundInstance instance)
         {
             instance.SetActive(true);
+
+            m_activeInstances++;
         }
 
         private void OnRelease(SoundInstance instance)
@@ -94,12 +101,15 @@ namespace com.absence.soundsystem.internals
             instance.m_followingTarget = null;
             instance.transform.localPosition = Vector3.zero;
             instance.SetActive(false);
+
+            m_activeInstances--;
         }
 
         private void PerformDestroy(SoundInstance instance)
         {
             instance.Destroy();
         }
+
         #endregion
 
         private void SetupSingleton()

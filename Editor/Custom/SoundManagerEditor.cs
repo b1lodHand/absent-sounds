@@ -1,4 +1,5 @@
 using com.absence.soundsystem.internals;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,6 +36,15 @@ namespace com.absence.soundsystem.editor
             DrawDDOLToggle();
 
             if (Application.isPlaying) GUI.enabled = true;
+
+            EditorGUILayout.Space();
+
+            if (Application.isPlaying) DrawInfo();
+            else
+            {
+                EditorGUILayout.HelpBox("You need to start the game to see any runtime data.",
+                    MessageType.Info);
+            }
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -100,6 +110,35 @@ namespace com.absence.soundsystem.editor
 
                 prefab = EditorGUILayout.ObjectField(content, prefab, typeof(AudioSource), allowSceneObjects: false)
                     as AudioSource;
+            }
+
+            void DrawInfo()
+            {
+                GUI.enabled = false;
+
+                GUIStyle style = new(GUI.skin.label);
+                style.richText = true;
+
+                int totalInstances = manager.m_activeInstances;
+                int freqInstances = 0;
+                
+                if (manager.m_frequentList != null)
+                    freqInstances = manager.m_frequentList.Count;
+
+                GUIContent content = new GUIContent()
+                {
+                    text = $"<i>Used Instances (Total): {totalInstances}</i>",
+                };
+
+                GUIContent content2 = new GUIContent()
+                {
+                    text = $"<i>Used Frequent Instances: {freqInstances}</i>",
+                };
+
+                EditorGUILayout.LabelField(content, style);
+                EditorGUILayout.LabelField(content2, style);
+
+                GUI.enabled = true;
             }
         }
     }
