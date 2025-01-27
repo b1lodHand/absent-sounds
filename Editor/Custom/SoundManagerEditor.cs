@@ -95,13 +95,7 @@ namespace com.absence.soundsystem.editor
                     tooltip = "If true, this object will try to move itself to DontDestroyOnLoad scene on awake.",
                 };
 
-                if (!useSingleton)
-                {
-                    GUI.enabled = false;
-                    dontDestroyOnLoad = false;
-                }
                 dontDestroyOnLoad = EditorGUILayout.Toggle(content, dontDestroyOnLoad);
-                if (!useSingleton) GUI.enabled = true;
             }
 
             void DrawFreqField()
