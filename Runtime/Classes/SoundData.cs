@@ -40,6 +40,23 @@ namespace com.absence.soundsystem
             m_volume = new Vector2(1f, 1f);
             m_pitch = new Vector2(1f, 1f);
         }
+
+        public SoundData(SoundData copyFrom)
+        {
+            m_clip = copyFrom.Clip;
+            m_mixerGroup = copyFrom.TargetMixerGroup;
+            m_isFrequent = copyFrom.IsFrequent;
+            m_volume = copyFrom.m_volume;
+            m_pitch = copyFrom.m_pitch;
+        }
+
+        public SoundData WithAudioClip(AudioClip clip)
+        {
+            SoundData copy = new SoundData(this);
+            copy.m_clip = clip;
+
+            return copy;
+        }
     }
 
 }

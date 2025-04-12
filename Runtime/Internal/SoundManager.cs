@@ -69,7 +69,7 @@ namespace com.absence.soundsystem.internals
 
         private void SetupPool()
         {
-            m_pool = new ObjectPool<SoundInstance>(OnCreate, OnGet, OnRelease, PerformDestroy, true, DEFAULT_POOL_CAPACITY, 10000);
+            m_pool = new ObjectPool<SoundInstance>(OnCreate, OnGet, OnRelease, PerformDestroy, true, m_initialPoolCapacity, 10000);
             m_frequentList = new();
         }
 
